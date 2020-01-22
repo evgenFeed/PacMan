@@ -2,37 +2,49 @@
 
 Game::Game():
 	_pac(),
-	_map()
+	_map(),
+	_score(0)
 {
 	
 }
 
 void Game::run()
 {
-	/*while (true)
+	while (true)
 	{
 		draw();
 		update();
 		clear();
-	}*/
-	draw();
+	}
+	//draw();
 }
 
 void Game::draw()
 {
-	_pac.draw();
-	_map.draw(_pac.getTile());
+	//_pac.draw();
+	_map.draw(*_pac.getTile());
 	_map.draw();
-	
 }
 
 void Game::update()
 {
-	_pac.update();
+	_pac.update(checkMove());
 	_map.update();
 }
 
 void Game::clear()
 {
 	system("cls");
+}
+
+bool Game::checkMove()
+{
+	Point nextStep = { _pac.getPosition()._x + _pac.getMoveVector()._x,_pac.getPosition()._y + _pac.getMoveVector()._y };
+	char nextStepChar = _map.getTiles()[nextStep._y][nextStep._x]->getChar();
+	if (nextStepChar == '#') {
+		return false;
+	}
+	else {
+		return true;
+	}
 }

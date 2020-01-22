@@ -9,9 +9,14 @@ PacMan::PacMan(Point moveVector) :
 
 void PacMan::move()
 {
+}
+
+void PacMan::move(bool canMove)
+{
 	checkKeyboard();
-	
-	//this->setPosition(this->getPosition() += _moveVector);
+	if (canMove) {
+		this->setPosition(this->getPosition() += _moveVector);
+	}
 }
 
 void PacMan::checkKeyboard()
@@ -35,9 +40,9 @@ void PacMan::checkKeyboard()
 }
 
 
-void PacMan::update()
+void PacMan::update(bool canMove)
 {
-	move();
+	move(canMove);
 }
 
 void PacMan::draw()
@@ -47,5 +52,10 @@ void PacMan::draw()
 
 Tile* PacMan::getTile()
 {
-	return &Tile::getTile();
+	return Tile::getTile();
+}
+
+Point PacMan::getMoveVector() const
+{
+	return _moveVector;
 }

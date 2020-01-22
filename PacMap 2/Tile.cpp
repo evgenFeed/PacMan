@@ -12,14 +12,14 @@ Tile::Tile(const Tile& tile):
 {
 }
 
-Tile Tile::getTile()
+Tile* Tile::getTile()
 {
-	return *this;
+	return this;
 }
 
 Point Tile::getPosition() const
 {
-	return _position;
+	return this->_position;
 }
 
 char Tile::getChar()

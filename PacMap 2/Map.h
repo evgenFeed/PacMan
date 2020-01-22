@@ -14,7 +14,8 @@ public:
 	Map();
 	void draw();
 	void update();
-	void draw(Tile* tile);
+	void draw(Tile& tile);
+	std::vector<std::vector<Tile*>> getTiles();
 private:
 	std::vector<std::vector<Tile*>> _tiles;
 	void mapLoading();

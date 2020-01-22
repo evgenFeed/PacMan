@@ -16,10 +16,14 @@ void Map::draw()
 	}
 }
 
-void Map::draw(Tile* tile)
+void Map::draw(Tile& tile)
 {
-	_tiles[tile->getPosition()._y][tile->getPosition()._x] = tile;
-	draw();
+	_tiles[tile.getPosition()._y][tile.getPosition()._x] = &tile;
+}
+
+std::vector<std::vector<Tile*>> Map::getTiles()
+{
+	return _tiles;
 }
 
 void Map::update()

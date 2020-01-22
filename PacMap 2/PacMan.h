@@ -9,12 +9,14 @@ class PacMan :
 public:
 	PacMan(Point moveVector = {0,0});
 	//GetAsyncKeyState
-	void update();
+	void update(bool canMove);
 	void draw();
 	Tile* getTile();
+	Point getMoveVector()const;
 private:
 	Point _moveVector;
 	void move();
+	void move(bool canMove);
 	void checkKeyboard();
 };
 

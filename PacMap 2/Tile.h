@@ -5,7 +5,7 @@ class Tile
 public:
 	Tile(char tile, Point position);
 	Tile(const Tile& tile);
-	Tile getTile();
+	Tile* getTile();
 	Point getPosition()const;
 	char getChar();
 protected:
