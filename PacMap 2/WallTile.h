@@ -4,6 +4,6 @@ class WallTile :
 	public Tile
 {
 public:
-	WallTile(char tile, Point position);
+	WallTile(char tile, std::string type, Point position);
 };
 

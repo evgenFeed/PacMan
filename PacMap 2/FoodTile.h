@@ -4,6 +4,6 @@ class FoodTile :
 	public Tile
 {
 public:
-	FoodTile(char tile, Point position);
+	FoodTile(char tile, std::string type, Point position);
 };
 

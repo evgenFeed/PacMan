@@ -1,6 +1,6 @@
 #include "FoodTile.h"
 
-FoodTile::FoodTile(char tile, Point position):
-	Tile(tile, position)
+FoodTile::FoodTile(char tile, std::string type, Point position):
+	Tile(tile, type, position)
 {
 }

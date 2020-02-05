@@ -1,14 +1,9 @@
 #include "Tile.h"
 
-Tile::Tile(char tile, Point position) :
+Tile::Tile(char tile, std::string type,Point position) :
 	_tile(tile),
-	_position(position)
-{
-}
-
-Tile::Tile(const Tile& tile):
-	_position(tile._position),
-	_tile(tile._tile)
+	_position(position),
+	_type(type)
 {
 }
 
@@ -25,6 +20,11 @@ Point Tile::getPosition() const
 char Tile::getChar()
 {
 	return _tile;
+}
+
+std::string Tile::getType()
+{
+	return _type;
 }
 
 void Tile::setPosition(Point position)

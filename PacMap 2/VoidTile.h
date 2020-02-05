@@ -4,6 +4,6 @@ class VoidTile :
 	public Tile
 {
 public:
-	VoidTile(char tile, Point position);
+	VoidTile(char tile, std::string type, Point position);
 };
 

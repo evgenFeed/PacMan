@@ -1,8 +1,9 @@
 #include "PacMan.h"
 
 PacMan::PacMan(Point moveVector) :
-	Tile('@', {1,1}),
-	_moveVector(moveVector)
+	Tile('@', "PacMan", { 1,1 }),
+	_moveVector(moveVector),
+	_state("moving")
 {
 	
 }
@@ -11,11 +12,34 @@ void PacMan::move()
 {
 }
 
-void PacMan::move(bool canMove)
+Tile* PacMan::move(char nextChar)
 {
 	checkKeyboard();
-	if (canMove) {
+	Tile* temp;
+	if (nextChar != '#') {
+		Point oldPos = this->getPosition();
 		this->setPosition(this->getPosition() += _moveVector);
+		if (nextChar == '+') {
+			temp = new VoidTile(' ', "void", oldPos);
+			return temp;
+		}
+		else if (nextChar == 'e') {
+			_state = "energized";
+			temp = new VoidTile(' ', "void", oldPos);
+			return temp;
+		}
+		else if (nextChar == ' ') {
+			temp = new VoidTile(' ', "void", oldPos);
+			return temp;
+		}
+		else if (nextChar == '@') {
+			temp = new VoidTile(' ', "void", oldPos);
+			return temp;
+		}
+	}
+	else {
+		_moveVector = { 0,0 };
+		return this;
 	}
 }
 
@@ -40,9 +64,9 @@ void PacMan::checkKeyboard()
 }
 
 
-void PacMan::update(bool canMove)
+Tile* PacMan::update(char nextChar)
 {
-	move(canMove);
+	return move(nextChar);
 }
 
 void PacMan::draw()

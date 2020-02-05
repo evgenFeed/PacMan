@@ -11,7 +11,7 @@ private:
 	void draw();
 	void update();
 	void clear();
-	bool checkMove();
+	char checkNextChar();
 	Map _map;
 	PacMan _pac;
 	int _score;

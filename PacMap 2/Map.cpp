@@ -16,9 +16,9 @@ void Map::draw()
 	}
 }
 
-void Map::draw(Tile& tile)
+void Map::draw(Tile* tile)
 {
-	_tiles[tile.getPosition()._y][tile.getPosition()._x] = &tile;
+	_tiles[tile->getPosition()._y][tile->getPosition()._x] = tile;
 }
 
 std::vector<std::vector<Tile*>> Map::getTiles()
@@ -26,9 +26,14 @@ std::vector<std::vector<Tile*>> Map::getTiles()
 	return _tiles;
 }
 
-void Map::update()
+Tile Map::getTile(Point pos)
 {
-	
+	return *_tiles[pos._y][pos._x];
+}
+
+void Map::update(Tile* pacBeforeTile)
+{
+	_tiles[pacBeforeTile->getPosition()._y][pacBeforeTile->getPosition()._x] = pacBeforeTile;
 }
 
 
@@ -62,22 +67,22 @@ Tile* Map::tileType(char tile, Point position)
 	switch (tile)
 	{
 	case '#':
-		tempTile = new WallTile(tile, position);
+		tempTile = new WallTile(tile, "wall", position);
 		break;
 	case '+':
-		tempTile = new FoodTile(tile, position);
+		tempTile = new FoodTile(tile, "food", position);
 		break;
 	case ' ':
-		tempTile = new VoidTile(tile, position);
+		tempTile = new VoidTile(tile, "void", position);
 		break;
 	case '-':
-		tempTile = new DoorTile(tile, position);
+		tempTile = new DoorTile(tile, "door", position);
 		break;
 	case 'e':
-		tempTile = new EnergizerTile(tile, position);
+		tempTile = new EnergizerTile(tile, "energizer", position);
 		break;
 	default: 
-		tempTile = new VoidTile(tile, position);
+		tempTile = new VoidTile(tile, "void", position);
 		break;
 	}
 	return tempTile;

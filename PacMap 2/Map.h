@@ -13,10 +13,11 @@ class Map
 public:
 	Map();
 	void draw();
-	void update();
-	void draw(Tile& tile);
+	void update(Tile* pacBeforeTile);
+	void draw(Tile* tile);
 	std::vector<std::vector<Tile*>> getTiles();
 private:
+	Tile getTile(Point pos);
 	std::vector<std::vector<Tile*>> _tiles;
 	void mapLoading();
 	Tile* tileType(char tile, Point position);

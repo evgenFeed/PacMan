@@ -1,7 +1,7 @@
 #include "WallTile.h"
 
-WallTile::WallTile(char tile, Point position):
-	Tile(tile, position)
+WallTile::WallTile(char tile, std::string type, Point position):
+	Tile(tile, type, position)
 {
 
 }
