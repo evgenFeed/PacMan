@@ -21,7 +21,6 @@ private:
 	std::vector<std::vector<Tile*>> _tiles;
 	void mapLoading();
 	Tile* tileType(char tile, Point position);
-
 	const int MAPSIZEX = 28;
 	const int MAPSIZEY = 31;
 };
