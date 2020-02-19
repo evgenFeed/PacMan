@@ -14,7 +14,7 @@ private:
 	void update();
 	void clear();
 	char checkNextChar();
-	void findPath();
+	std::deque<Point> findPath();
 	Map _map;
 	PacMan _pac;
 	Ghost _ghost;

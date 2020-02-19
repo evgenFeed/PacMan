@@ -14,27 +14,27 @@ Game::Game():
 
 void Game::run()
 {
-	//while (true)
-	//{
-		//draw();
-		//update();
-		//clear();
-	//}
-	draw();
-	findPath();
-
+	while (true)
+	{
+		draw();
+		update();
+		clear();
+	}
+	//draw();
 }
 
 void Game::draw()
 {
-	//_pac.draw();
+	_pac.draw();
 	_map.draw(_pac.getTile());
+	_map.draw(_ghost.getTile());
 	_map.draw();
 }
 
 void Game::update()
 {
-	//_ghost.findTarget(_pac.getPosition());
+	_ghost.update(findPath());
+	_map.update(&_ghost);
 	_map.update(_pac.update(checkNextChar()));
 }
 
@@ -49,30 +49,23 @@ char Game::checkNextChar()
 	char nextStepChar = _map.getTiles()[nextStep._y][nextStep._x]->getChar();
 	return nextStepChar;
 }
-
-void Game::findPath()
+std::deque<Point> Game::findPath()
 {
 	int d = 0; //вес
 	Point from;		//точко "от"
 	Point to;		//точка "до"
 	bool found = false; //флаг "найдено"
-	std::deque<Point> steps; //очередь шагов
-	Point wave; // где находится волна сейчас
+	bool pathReady = false;
+	std::deque<Point> steps; //очередь шагов волны
+	std::deque<Point> pathMoves; //шаги до цели
+	Point wave, backWave; // где находится (обратная) волна сейчас
 	std::vector<std::vector<int>> weights; //"весы"
 	for (int i = 0; i <= 31; i++) {
 		weights.push_back(std::vector<int>(28));
 		for (int j = 0; j < 28; j++) {
 			weights.at(i).at(j) = -1;
 		}
-	}  
-//#ifdef _DEBUG
-//	for (int i = 0; i <= 31; i++) {
-//		for (int j = 0; j < 28; j++) {
-//			std::cout << weights.at(i).at(j);
-//		}
-//		std::cout << std::endl;
-//	}
-//#endif
+	}
 	from = _ghost.getPosition(); //точка "от" - призрак
 	to = _pac.getPosition(); //точка "до" - пакман
 	wave = from; //установка волны в точку "от"
@@ -95,6 +88,8 @@ void Game::findPath()
 		}
 		if (x == to._x && y == to._y) {
 			found = true;
+			backWave = { x,y };
+			continue;
 		}
 		if (_map.getTiles().at(y + UP).at(x)->getChar() != '#') {
 			if (weights.at(y + UP).at(x) == -1) {
@@ -140,13 +135,34 @@ void Game::findPath()
 		else {
 		}
 	}
-#ifdef _DEBUG
-	for (int i = 0; i <= 31; i++)
-	{
-		for (int j = 0; j < 28; j++) {
-			std::cout<< std::setw(3) << weights.at(i).at(j);
+	while (!pathReady) {
+		//backWave = to;
+		if (backWave == from) {
+			pathReady = true;
+			continue;
 		}
-		std::cout << std::endl;
+		int x = backWave._x, y = backWave._y;
+		d = weights.at(backWave._y).at(backWave._x);
+		if (weights.at(backWave._y + UP).at(backWave._x) < d && weights.at(backWave._y + UP).at(backWave._x) != -1) {
+			Point temp{ x - x, y - (y + UP) };
+			pathMoves.push_back(temp);
+			backWave = { backWave._x, backWave._y + UP };
+		}
+		else if (weights.at(backWave._y).at(backWave._x + RIGHT) < d && weights.at(backWave._y).at(backWave._x + RIGHT) != -1) {
+			Point temp{ x - (x + RIGHT), y - y };
+			pathMoves.push_back(temp);
+			backWave = { backWave._x + RIGHT, backWave._y };
+		}
+		else if (weights.at(backWave._y + DOWN).at(backWave._x) < d && weights.at(backWave._y + DOWN).at(backWave._x) != -1) {
+			Point temp{ x - x, y - (y + DOWN) };
+			pathMoves.push_back(temp);
+			backWave = { backWave._x, backWave._y + DOWN };
+		}
+		else if (weights.at(backWave._y).at(backWave._x + LEFT) < d && weights.at(backWave._y).at(backWave._x + LEFT) != -1) {
+			Point temp{ x - (x + LEFT), y - y };
+			pathMoves.push_back(temp);
+			backWave = { backWave._x + LEFT, backWave._y };
+		}
 	}
-#endif
+	return pathMoves;
 }

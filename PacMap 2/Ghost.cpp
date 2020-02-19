@@ -10,4 +10,14 @@ Ghost::Ghost(std::string name) :
 
 void Ghost::move()
 {
+	Point nextMove = dequeMoves.back();
+	Point oldPos = this->getPosition();
+	dequeMoves.pop_back();
+	this->setPosition(oldPos+nextMove);
+}
+
+void Ghost::update(std::deque<Point> moves)
+{
+	dequeMoves = moves;
+	move();
 }

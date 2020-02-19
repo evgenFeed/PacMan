@@ -31,9 +31,9 @@ Tile Map::getTile(Point pos)
 	return *_tiles[pos._y][pos._x];
 }
 
-void Map::update(Tile* pacBeforeTile)
+void Map::update(Tile* beforeTile)
 {
-	_tiles[pacBeforeTile->getPosition()._y][pacBeforeTile->getPosition()._x] = pacBeforeTile;
+	_tiles[beforeTile->getPosition()._y][beforeTile->getPosition()._x] = beforeTile;
 }
 
 

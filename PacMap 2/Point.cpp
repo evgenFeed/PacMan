@@ -6,3 +6,11 @@ Point& Point::operator+=(const Point& rValue)
 	_y += rValue._y;
 	return *this;
 }
+
+Point Point::operator+(const Point& rValue)
+{
+	Point p = *this;
+	p += rValue;
+	return p;
+}
+
